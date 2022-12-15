@@ -11,16 +11,19 @@ from models.user import User
 from models.state import State
 from models.review import Review
 
-classes ={
+
+classes = {
     "cities": City, "amenities": Amenity,
     "places": Place, "users": User,
     "states": State, "reviews": Review
 }
 
+
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status_route():
     """ """
     return jsonify({'status': 'OK'})
+
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def stats():
