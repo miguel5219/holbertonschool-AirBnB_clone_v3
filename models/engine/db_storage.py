@@ -80,14 +80,21 @@ class DBStorage:
         or None if not found
         """
 
-        for k, obj in self.all(cls).items():
-            if obj.id == id:
-                return obj
-        return None
+        if not (cls or id):
+            return None
+        k = "{}.{}".format(cls,__name__, id)
+
+        if k in self.all():
+            return self.all()[k]
+        else:
+            return None
+
 
     def count(self, cls=None):
         """ Returns the number of objects in storage matching the given class.
         If no class is passed, returns the count of all objects in storage.
         """
-
-        return len(self.all(cls))
+        if cls is None:
+            return len(self.all().keys())
+        else:
+            return len(self.all(cls).keys())
