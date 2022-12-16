@@ -61,7 +61,7 @@ def states_put(state_id):
     """ Updates a State object: PUT /api/v1/states/<state_id>. """
     state = storage.get(State, state_id)
     if not state:
-        abort(404)
+        abort(200)
 
     if not request.get_json():
         abort(400, "Not a JSON")
