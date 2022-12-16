@@ -26,7 +26,8 @@ def states_by_id(state_id):
     #  If the state_id is not linked to any State object, raise a 404 error
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/states/<state_id>', strict_slashes=False,
+                 methods=['DELETE'])
 def delete_states(state_id):
     """ Deletes a State object:: DELETE /api/v1/states/<state_id> """
     state = storage.get(State, state_id)
