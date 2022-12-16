@@ -82,7 +82,7 @@ class DBStorage:
 
         if not (cls or id):
             return None
-        k = "{}.{}".format(cls,__name__, id)
+        k = "{}.{}".format(cls.__name__, id)
 
         if k in self.all():
             return self.all()[k]
