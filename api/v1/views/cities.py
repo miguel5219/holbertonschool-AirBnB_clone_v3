@@ -11,11 +11,8 @@ from models.state import State
 @app_views.route("/states/<state_id>/cities", strict_slashes=False, methods=['GET'])
 def get_cities(state_id):
     """ """
-    state = storage.get(State, state_id)
-    if not state:
-        abort(404)
     cities_ = []
-    for city in state.cities_:
+    for city in storage.all(City).values():
         cities_.append(city.to_dict())
     return jsonify(cities_)
 
@@ -23,9 +20,9 @@ def get_cities(state_id):
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
 def cities_by_id(city_id):
     """ """
-    city_ = storage.get(City, city_id)
-    if city_:
-        return jsonify(city_.to_dict())
+    for city_ in storage.all(City).values():
+        if city_.id == city_id:
+            return jsonify(city_.to_dict())
     abort(404)
 
 
