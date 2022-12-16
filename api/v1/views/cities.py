@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" create a new view for City objects that handles all default RESTFul API actions """
+""" create a new view for City objects that
+handles all default RESTFul API actions """
 
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
@@ -8,7 +9,8 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route("/states/<state_id>/cities", strict_slashes=False, methods=['GET'])
+@app_views.route("/states/<state_id>/cities", strict_slashes=False,
+                 methods=['GET'])
 def get_cities(state_id):
     """ """
     cities_ = []
@@ -37,7 +39,8 @@ def del_cities(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['POST'])
+@app_views.route('/states/<state_id>/cities', strict_slashes=False,
+                 methods=['POST'])
 def cities_posts(state_id):
     """ """
     if not request.get_json():
@@ -54,6 +57,7 @@ def cities_posts(state_id):
     setattr(city_new, 'state_id', state_id)
     city_new.save()
     return jsonify(city_new.to_dict()), 201
+
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['PUT'])
 def put_cities(city_id):
