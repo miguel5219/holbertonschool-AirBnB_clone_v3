@@ -48,12 +48,12 @@ def del_cities(city_id):
                  methods=['POST'])
 def cities_posts(state_id):
     """ """
-    obj =  request.get_json()
+    obj = request.get_json()
     state = storage.get(State, state_id)
     if obj is None:
         abort(400, "Not a JSON")
 
-    if state == None:
+    if state is None:
         abort(404, "Not found")
 
     if 'name' not in obj:
@@ -69,16 +69,17 @@ def cities_posts(state_id):
 def put_cities(city_id):
     """ update state """
     city_ = storage.get(City, city_id)
-    if not city_:
+    comp = request.get_json()
+    if city_ is None:
         abort(404)
 
-    if not request.get_json():
+    if comp is None:
         abort(400, "Not a JSON")
 
-    for k, value in request.get_json().items():
+    for k, value in comp.items():
         if k in ["id", "state_id", "created_at", "updated_at"]:
             continue
         else:
             setattr(city_, k, value)
-    storage.save()
+    city_.save()
     return jsonify(city_.to_dict(), 200)
