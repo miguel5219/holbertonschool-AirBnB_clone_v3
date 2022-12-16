@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" """
+""" Create a new VIEW for State objects that
+handles all default RESTFul API actions """
 
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
@@ -23,7 +24,6 @@ def states_by_id(state_id):
         if state.id == state_id:
             return jsonify(state.to_dict())
     abort(404)
-    #  If the state_id is not linked to any State object, raise a 404 error
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False,
@@ -53,7 +53,6 @@ def state_post():
     state_new = State(**request.get_json())
     state_new.save()
     return jsonify(state_new.to_dict()), 201
-    # Returns the new State with the status code 201
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
