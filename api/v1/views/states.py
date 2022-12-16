@@ -3,7 +3,7 @@
 handles all default RESTFul API actions """
 
 from api.v1.views import app_views
-from flask import Flask, jsonify, abort, request
+from flask import Flask, jsonify, abort, request, make_response
 from models import storage
 from models.state import State
 
@@ -31,9 +31,9 @@ def states_by_id(state_id):
 def delete_states(state_id):
     """ Deletes a State object:: DELETE /api/v1/states/<state_id> """
     state = storage.get(State, state_id)
-    if not state:
-        abort(404)
-    state.delete()
+    if state is None:
+        return make_response(jsonify({'error': 'Not found'}), 404)
+    storage.delete(state)
     storage.save()
     return jsonify({}), 200
 
