@@ -13,10 +13,15 @@ from models.state import State
                  methods=['GET'])
 def get_cities(state_id):
     """ """
-    cities_ = []
-    for city in storage.all(City).values():
-        cities_.append(city.to_dict())
-    return jsonify(cities_)
+    comp = storage.get(State, state_id)
+    if comp is not None:
+        cities_ = []
+        for city in storage.all(City).values():
+            if city.state_id == state_id:
+                cities_.append(city.to_dict())
+        return jsonify(cities_), 200
+
+    return abort(404, "Not found")
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
@@ -43,17 +48,18 @@ def del_cities(city_id):
                  methods=['POST'])
 def cities_posts(state_id):
     """ """
-    if not request.get_json():
+    obj =  request.get_json()
+    state = storage.get(State, state_id)
+    if obj is None:
         abort(400, "Not a JSON")
 
-    state = storage.get(State, state_id)
-    if not state:
-        abort(404)
+    if state == None:
+        abort(404, "Not found")
 
-    if 'name' not in request.get_json().keys():
+    if 'name' not in obj:
         abort(400, "Missing name")
 
-    city_new = City(**request.get_json())
+    city_new = City(**obj)
     setattr(city_new, 'state_id', state_id)
     city_new.save()
     return jsonify(city_new.to_dict()), 201
