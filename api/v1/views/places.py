@@ -15,7 +15,7 @@ from flask import request
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def get_place(city_id=None):
+def get_places(city_id=None):
     """ """
     objs = storage.get(City, city_id)
     if objs is None:
