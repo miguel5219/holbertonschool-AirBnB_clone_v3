@@ -36,7 +36,7 @@ def get_review(review_id=None):
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id=None):
-    objs =storage.get(Review, review_id)
+    objs = storage.get(Review, review_id)
     if objs is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
     storage.delete(objs)
@@ -53,7 +53,7 @@ def post_review(place_id=None):
         if 'text' not in comp_data:
             return make_response(jsonify({'error': 'Missing text'}), 400)
         if 'user_id' not in comp_data:
-            return make_response(jsonify({'error':'Missing user_id'}), 400)
+            return make_response(jsonify({'error': 'Missing user_id'}), 400)
     objs = storage.get(Place, place_id)
     objs_1 = storage.get(User, comp_data['user_id'])
     if objs is None or objs_1 is None:
@@ -73,12 +73,13 @@ def put_reviews(review_id=None):
     else:
         objs = storage.get(Review, review_id)
         if objs is None:
-            return make_response(jsonify({'error':'Not found'}), 404)
+            return make_response(jsonify({'error': 'Not found'}), 404)
         else:
             comp_data = request.get_json(silent=True, force=True)
             if comp_data is None:
                 return make_response(jsonify({'error': 'Not a JSON'}), 400)
             [setattr(objs, key, value) for key, value in comp_data.items()
-             if key != ('id', 'user_id', 'created_at', 'place_id', 'updated_id', 'state_id')]
+             if key != ('id', 'user_id', 'created_at', 'place_id',
+                        'updated_id', 'state_id')]
             objs.save()
             return make_response(jsonify(objs.to_dict()), 200)
