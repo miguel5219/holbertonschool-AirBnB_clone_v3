@@ -43,6 +43,7 @@ def delete_review(review_id=None):
     storage.save()
     return make_response(jsonify({}), 200)
 
+
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def post_review(place_id=None):
