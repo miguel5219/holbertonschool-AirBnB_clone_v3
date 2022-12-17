@@ -16,6 +16,7 @@ from flask import request
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_place(city_id=None):
+    """ """
     objs = storage.get(City, city_id)
     if objs is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
@@ -26,6 +27,7 @@ def get_place(city_id=None):
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place(place_id=None):
+    """ """
     objs = storage.get(Place, place_id)
     if objs is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
@@ -36,6 +38,7 @@ def get_place(place_id=None):
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(place_id=None):
+    """ """
     objs = storage.get(Place, place_id)
     if objs is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
@@ -47,6 +50,7 @@ def delete_place(place_id=None):
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def post_place(city_id=None):
+    """ """
     comp_data = request.get_json(silent=True, force=True)
     if comp_data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
@@ -68,12 +72,13 @@ def post_place(city_id=None):
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_place(place_id=None):
+    """ """
     if place_id is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
     else:
         objs = storage.get(Place, place_id)
         if objs is None:
-            return make_response(jsonify({'error': 'Not founud'}), 404)
+            return make_response(jsonify({'error': 'Not found'}), 404)
         else:
             comp_data = request.get_json(silent=True, force=True)
             if comp_data is None:
