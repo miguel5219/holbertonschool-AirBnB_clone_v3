@@ -42,7 +42,7 @@ def post_user():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     else:
         if 'email' not in comp_data:
-            return make_response(jsonify({'error':'Missing email'}), 400)
+            return make_response(jsonify({'error': 'Missing email'}), 400)
         if 'password' not in comp_data:
             return make_response(jsonify({'error': 'Missing password'}), 400)
         objs = User(**comp_data)
@@ -63,6 +63,6 @@ def put_user(user_id=None):
             if comp_data is None:
                 return make_response(jsonify({'error': 'Not a JSON'}), 400)
             [setattr(objs, item, value) for item, value in comp_data.items()
-             if item !=('id', 'email', 'created_at', 'updated_at')]
+             if item != ('id', 'email', 'created_at', 'updated_at')]
             objs.save()
             return make_response(jsonify(objs.to_dict()), 200)
