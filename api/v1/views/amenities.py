@@ -15,8 +15,8 @@ from flask import request
 def get_amenities(amenity_id=None):
     """ """
     if amenity_id is None:
-        objs_amenitites = [amenity.to_dict() for amenity in storage.all(Amenity).values()]
-        return make_response(jsonify(objs_amenitites), 200)
+        objs_amenities = [amenity.to_dict() for amenity in storage.all(Amenity).values()]
+        return make_response(jsonify(objs_amenities), 200)
     else:
         objs = storage.get(Amenity, amenity_id)
         if objs is None:
