@@ -61,7 +61,7 @@ def post_place(city_id=None):
             return make_response(jsonify({'error': 'Missing user_id'}), 400)
         obj = storage.get(City, city_id)
         objs_1 = storage.get(User, comp_data['user_id'])
-        if obj is None or objs_1 is None or (obj is None and objs_1 is None):
+        if obj is None or objs_1 is None:
             return make_response(jsonify({'error': 'Not found'}), 404)
         objs = Place(**comp_data)
         objs.city_id = city_id
